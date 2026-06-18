@@ -17,6 +17,10 @@ type ExtractedItem = {
   currency: string;
   category?: string;
   customsReference?: string;
+  vatTreatment?: "STANDARD_RATED" | "ZERO_RATED" | "EXEMPT" | "OUTSIDE_SCOPE" | "NEEDS_REVIEW";
+  confidenceScore?: number;
+  reasoning?: string;
+  warning?: string;
 };
 
 export default function UploadPage() {
@@ -45,35 +49,45 @@ export default function UploadPage() {
       return;
     }
     setLoading(true);
-    const form = new FormData();
-    form.set("planKey", plan.key);
-    form.set("businessName", businessName);
-    files.forEach((file) => form.append("files", file));
-    const response = await fetch("/api/upload", { method: "POST", body: form });
-    const data = await response.json();
-    setLoading(false);
-    if (!response.ok) {
-      setError(data.error || "Upload failed.");
-      return;
+    try {
+      const form = new FormData();
+      form.set("planKey", plan.key);
+      form.set("businessName", businessName);
+      files.forEach((file) => form.append("files", file));
+      const response = await fetch("/api/upload", { method: "POST", body: form });
+      const data = await readJson(response);
+      if (!response.ok) {
+        setError(data.error || "Upload failed.");
+        return;
+      }
+      setDraftId(data.reportId);
+      setItems(data.items);
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : "Upload failed. Please try a smaller text-based PDF.");
+    } finally {
+      setLoading(false);
     }
-    setDraftId(data.reportId);
-    setItems(data.items);
   }
 
   async function calculate() {
     setLoading(true);
-    const response = await fetch(`/api/reports/${draftId}/confirm`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items, businessName, planKey: plan.key })
-    });
-    const data = await response.json();
-    setLoading(false);
-    if (!response.ok) {
-      setError(data.error || "Calculation failed.");
-      return;
+    try {
+      const response = await fetch(`/api/reports/${draftId}/confirm`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items, businessName, planKey: plan.key })
+      });
+      const data = await readJson(response);
+      if (!response.ok) {
+        setError(data.error || "Calculation failed.");
+        return;
+      }
+      router.push(`/results/${draftId}`);
+    } catch (calculateError) {
+      setError(calculateError instanceof Error ? calculateError.message : "Calculation failed.");
+    } finally {
+      setLoading(false);
     }
-    router.push(`/results/${draftId}`);
   }
 
   function update(index: number, key: keyof ExtractedItem, value: string) {
@@ -159,6 +173,12 @@ export default function UploadPage() {
                     </label>
                   ))}
                 </div>
+                <div className="mt-3 rounded bg-slate-50 p-3 text-sm text-slate-700">
+                  <p><span className="font-semibold text-navy">VAT classification:</span> {item.vatTreatment?.replaceAll("_", " ") || "Needs review"}</p>
+                  <p className="mt-1"><span className="font-semibold text-navy">Confidence:</span> {item.confidenceScore ?? 0}%</p>
+                  <p className="mt-1"><span className="font-semibold text-navy">Reasoning:</span> {item.reasoning || "Review the extracted data before calculating."}</p>
+                  {item.warning && <p className="mt-1 text-amber-700"><span className="font-semibold">Warning:</span> {item.warning}</p>}
+                </div>
               </div>
             ))}
           </div>
@@ -173,4 +193,13 @@ export default function UploadPage() {
       </div>
     </main>
   );
+}
+
+async function readJson(response: Response) {
+  const text = await response.text();
+  try {
+    return text ? JSON.parse(text) : {};
+  } catch {
+    return { error: text || `Request failed with status ${response.status}` };
+  }
 }

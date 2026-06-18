@@ -1,7 +1,7 @@
 import * as XLSX from "xlsx";
 
-export async function extractTextFromFile(file: File) {
-  const buffer = Buffer.from(await file.arrayBuffer());
+export async function extractTextFromFile(file: File, existingBuffer?: Buffer) {
+  const buffer = existingBuffer ?? Buffer.from(await file.arrayBuffer());
   const lower = file.name.toLowerCase();
 
   if (lower.endsWith(".csv")) return buffer.toString("utf8");
@@ -17,7 +17,7 @@ export async function extractTextFromFile(file: File) {
   if (lower.endsWith(".pdf")) {
     const pdfParse = (await import("pdf-parse")).default;
     const parsed = await pdfParse(buffer);
-    return parsed.text;
+    return parsed.text.trim() || `PDF upload: ${file.name}. No selectable text was found. If this is a scanned PDF, OCR is required before AI extraction can read it.`;
   }
 
   return `Image upload: ${file.name}. OCR is recommended for production. Manual confirmation is available before calculation.`;

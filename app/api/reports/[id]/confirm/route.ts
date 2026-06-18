@@ -4,17 +4,23 @@ import { prisma } from "@/lib/prisma";
 import { classifyConfirmedTransactions, summarize } from "@/lib/analysis";
 import { rateLimit } from "@/lib/rate-limit";
 
+const optionalString = z.preprocess((value) => (value === null ? undefined : value), z.string().optional());
+
 const itemSchema = z.object({
-  supplierName: z.string().optional(),
-  invoiceDate: z.string().optional(),
-  invoiceNumber: z.string().optional(),
+  supplierName: optionalString,
+  invoiceDate: optionalString,
+  invoiceNumber: optionalString,
   description: z.string().min(1),
   amountBeforeVat: z.number().default(0),
   vatAmount: z.number().default(0),
   totalAmount: z.number().default(0),
   currency: z.string().default("BHD"),
-  category: z.string().optional(),
-  customsReference: z.string().optional()
+  category: optionalString,
+  customsReference: optionalString,
+  vatTreatment: z.enum(["STANDARD_RATED", "ZERO_RATED", "EXEMPT", "OUTSIDE_SCOPE", "NEEDS_REVIEW"]).optional(),
+  confidenceScore: z.number().min(0).max(100).optional(),
+  reasoning: optionalString,
+  warning: optionalString
 });
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {

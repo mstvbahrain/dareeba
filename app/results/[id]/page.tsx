@@ -97,7 +97,7 @@ export default async function ResultsPage({ params }: { params: Promise<{ id: st
           <table className="w-full min-w-[900px] text-left text-sm">
             <thead className="bg-slate-50 text-xs uppercase text-slate-500">
               <tr>
-                {["Description", "Amount", "VAT charged", "Treatment", "Confidence", "Reasoning", "Warning"].map((head) => (
+                {["Supplier", "Invoice no.", "Invoice date", "Description", "Subtotal", "VAT amount", "Total", "VAT classification", "Confidence", "Reasoning", "Warning"].map((head) => (
                   <th key={head} className="px-4 py-3">{head}</th>
                 ))}
               </tr>
@@ -105,9 +105,13 @@ export default async function ResultsPage({ params }: { params: Promise<{ id: st
             <tbody>
               {report.transactions.map((item) => (
                 <tr key={item.id} className="border-t border-slate-100">
+                  <td className="px-4 py-3">{item.supplierName || "Unknown"}</td>
+                  <td className="px-4 py-3">{item.invoiceNumber || "Not found"}</td>
+                  <td className="px-4 py-3">{item.invoiceDate ? item.invoiceDate.toISOString().slice(0, 10) : "Not found"}</td>
                   <td className="px-4 py-3">{item.description}</td>
-                  <td className={`px-4 py-3 ${unlocked ? "" : "blur-lock"}`}>{money(item.totalAmount)} {item.currency}</td>
+                  <td className={`px-4 py-3 ${unlocked ? "" : "blur-lock"}`}>{money(item.amountBeforeVat)} {item.currency}</td>
                   <td className={`px-4 py-3 ${unlocked ? "" : "blur-lock"}`}>{money(item.vatAmount)}</td>
+                  <td className={`px-4 py-3 ${unlocked ? "" : "blur-lock"}`}>{money(item.totalAmount)}</td>
                   <td className="px-4 py-3">{item.vatTreatment.replaceAll("_", " ")}</td>
                   <td className="px-4 py-3">{item.confidenceScore}%</td>
                   <td className={`px-4 py-3 ${unlocked ? "" : "blur-lock"}`}>{item.reasoning}</td>
