@@ -1,11 +1,35 @@
 -- Dareeba database setup for Neon SQL Editor.
 -- Paste this whole file into Neon > SQL Editor, then click Run.
 
-CREATE TYPE "ReportStatus" AS ENUM ('PREVIEW', 'PAID', 'REFERRED');
-CREATE TYPE "RiskLevel" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
-CREATE TYPE "VatTreatment" AS ENUM ('STANDARD_RATED', 'ZERO_RATED', 'EXEMPT', 'OUTSIDE_SCOPE', 'NEEDS_REVIEW');
-CREATE TYPE "PaymentStatus" AS ENUM ('PENDING', 'PAID', 'FAILED');
-CREATE TYPE "LeadStatus" AS ENUM ('NEW', 'SENT_TO_PARTNER', 'CONTACTED', 'CONVERTED', 'COMMISSION_RECEIVED');
+DO $$ BEGIN
+  CREATE TYPE "ReportStatus" AS ENUM ('PREVIEW', 'PAID', 'REFERRED');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE "RiskLevel" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE "VatTreatment" AS ENUM ('STANDARD_RATED', 'ZERO_RATED', 'EXEMPT', 'OUTSIDE_SCOPE', 'NEEDS_REVIEW');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE "PaymentStatus" AS ENUM ('PENDING', 'PAID', 'FAILED');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE "LeadStatus" AS ENUM ('NEW', 'SENT_TO_PARTNER', 'CONTACTED', 'CONVERTED', 'COMMISSION_RECEIVED');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
 CREATE TABLE IF NOT EXISTS "User" (
   "id" TEXT PRIMARY KEY,
