@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
 
   return new NextResponse("Admin authentication required.", {
     status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="Dareeba Admin"' }
+    headers: { "WWW-Authenticate": 'Basic realm="Fintyl Admin"' }
   });
 }
 

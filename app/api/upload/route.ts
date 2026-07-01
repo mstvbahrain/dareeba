@@ -3,6 +3,7 @@ import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { analyzeTransactions } from "@/lib/analysis";
+import { ensureDatabaseReady } from "@/lib/database-setup";
 import { assertSupportedFile, extractTextFromFile } from "@/lib/extract";
 import { rateLimit } from "@/lib/rate-limit";
 
@@ -18,6 +19,7 @@ export async function POST(request: NextRequest) {
     const planKey = String(form.get("planKey") || "free-preview");
     const businessName = String(form.get("businessName") || "");
     const files = form.getAll("files").filter((item): item is File => isUploadFile(item));
+    await ensureDatabaseReady();
     const plan = await prisma.pricingPlan.findUnique({ where: { key: planKey } });
     const fileLimit = plan?.fileLimit ?? (planKey === "free-preview" ? 1 : 5);
 
@@ -25,7 +27,7 @@ export async function POST(request: NextRequest) {
     if (files.length > fileLimit) return NextResponse.json({ error: `This package allows up to ${fileLimit} files.` }, { status: 400 });
 
     const report = await prisma.report.create({ data: { planKey, businessName, status: "PREVIEW" } });
-    const uploadRoot = process.env.UPLOAD_DIR || (process.env.VERCEL ? "/tmp/dareeba/uploads" : path.join(process.cwd(), "storage", "uploads"));
+    const uploadRoot = process.env.UPLOAD_DIR || (process.env.VERCEL ? "/tmp/fintyl/uploads" : path.join(process.cwd(), "storage", "uploads"));
     const uploadDir = path.join(uploadRoot, report.id);
     await mkdir(uploadDir, { recursive: true });
 

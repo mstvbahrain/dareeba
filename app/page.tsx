@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, BadgeCheck, FileSearch, ShieldCheck, UploadCloud, type LucideIcon } from "lucide-react";
 import { Disclaimer } from "@/components/Disclaimer";
 import { Section } from "@/components/Section";
@@ -9,6 +10,14 @@ export default function HomePage() {
       <section className="bg-navy text-white">
         <div className="mx-auto grid min-h-[560px] max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8">
           <div>
+            <Image
+              src="/brand/fintyl-logo.png"
+              alt="Fintyl - Finance. Simplified."
+              width={520}
+              height={390}
+              className="mb-8 h-auto w-64 rounded-md border border-white/10 shadow-soft sm:w-80"
+              priority
+            />
             <p className="text-sm font-semibold uppercase tracking-wide text-gold">Bahrain VAT estimate</p>
             <h1 className="mt-4 max-w-3xl text-5xl font-bold tracking-tight sm:text-6xl">Check Your Bahrain VAT in Minutes</h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200">

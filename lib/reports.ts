@@ -34,7 +34,7 @@ export async function createPdfReport(report: ReportExport) {
   const chunks: Buffer[] = [];
   doc.on("data", (chunk) => chunks.push(chunk));
 
-  doc.fontSize(22).text("Dareeba VAT Estimate Report");
+  doc.fontSize(22).text("Fintyl VAT Estimate Report");
   doc.moveDown(0.5).fontSize(10).fillColor("#555").text(disclaimer);
   doc.moveDown().fillColor("#111").fontSize(12);
   doc.text(`User/business name: ${report.businessName || "Not provided"}`);
@@ -73,7 +73,7 @@ export async function createPdfReport(report: ReportExport) {
 
 export async function createExcelReport(report: ReportExport) {
   const workbook = new ExcelJS.Workbook();
-  workbook.creator = "Dareeba";
+  workbook.creator = "Fintyl";
   const summary = workbook.addWorksheet("Summary");
   summary.addRows([
     ["Report reference", report.id],

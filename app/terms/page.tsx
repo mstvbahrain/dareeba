@@ -9,7 +9,7 @@ export default function TermsPage() {
         <Disclaimer />
         <section>
           <h2 className="text-xl font-bold text-navy">Use of estimates</h2>
-          <p className="mt-2">Dareeba produces preliminary VAT estimates using uploaded documents, configured VAT rules, and optional AI analysis. Results may be incomplete or inaccurate if documents are unclear, missing, duplicated, or outside the configured rule examples.</p>
+          <p className="mt-2">Fintyl produces preliminary VAT estimates using uploaded documents, configured VAT rules, and optional AI analysis. Results may be incomplete or inaccurate if documents are unclear, missing, duplicated, or outside the configured rule examples.</p>
         </section>
         <section>
           <h2 className="text-xl font-bold text-navy">Professional review</h2>

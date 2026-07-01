@@ -13,7 +13,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
   return new NextResponse(workbook, {
     headers: {
       "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Content-Disposition": `attachment; filename="dareeba-${report.id}.xlsx"`
+      "Content-Disposition": `attachment; filename="fintyl-${report.id}.xlsx"`
     }
   });
 }

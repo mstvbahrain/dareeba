@@ -1,6 +1,6 @@
-# Dareeba
+# Fintyl
 
-Dareeba is a full-stack MVP for Bahrain VAT document checks. Users upload invoices, receipts, import documents, CSV, or Excel files, confirm extracted data, receive an AI-assisted VAT estimate, unlock paid reports, and request review from a Bahrain VAT/accounting partner.
+Fintyl is a full-stack MVP for Bahrain VAT document checks. Users upload invoices, receipts, import documents, CSV, or Excel files, confirm extracted data, receive an AI-assisted VAT estimate, unlock paid reports, and request review from a Bahrain VAT/accounting partner.
 
 The app deliberately uses estimate-oriented wording throughout. It does not present results as final tax, legal, or accounting advice.
 
@@ -23,7 +23,7 @@ The app deliberately uses estimate-oriented wording throughout. It does not pres
 2. Open Terminal and go to the project folder:
 
 ```bash
-cd "/Users/shaji/Documents/Dareeba"
+cd "/Users/shaji/Documents/Fintyl"
 ```
 
 3. Install dependencies:
@@ -41,10 +41,10 @@ cp .env.example .env
 5. Set `DATABASE_URL` in `.env` to a PostgreSQL database. For a local Docker database, you can use:
 
 ```bash
-docker run --name dareeba-postgres \
+docker run --name fintyl-postgres \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=dareeba \
+  -e POSTGRES_DB=fintyl \
   -p 5432:5432 \
   -d postgres:16
 ```
@@ -73,7 +73,7 @@ http://localhost:3000
 Required:
 
 ```bash
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/dareeba"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fintyl"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ADMIN_USER="admin"
 ADMIN_PASSWORD="change-me"
@@ -92,12 +92,12 @@ SMTP_HOST=""
 SMTP_PORT="587"
 SMTP_USER=""
 SMTP_PASS=""
-SMTP_FROM="Dareeba <no-reply@example.com>"
+SMTP_FROM="Fintyl <no-reply@example.com>"
 RATE_LIMIT_WINDOW_MS="60000"
 RATE_LIMIT_MAX="30"
 ```
 
-`OPENAI_API_KEY` is optional. When it is not set, Dareeba uses fallback VAT classification based on the configured rule examples.
+`OPENAI_API_KEY` is optional. When it is not set, Fintyl uses fallback VAT classification based on the configured rule examples.
 
 Stripe variables are optional for local testing. If `STRIPE_SECRET_KEY` is missing, the checkout API marks the report as paid so the MVP can be tested without live payments.
 
@@ -123,9 +123,9 @@ Both commands should complete successfully.
 ```bash
 git init
 git add .
-git commit -m "Initial Dareeba MVP"
+git commit -m "Initial Fintyl MVP"
 git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/dareeba.git
+git remote add origin https://github.com/YOUR-USERNAME/fintyl.git
 git push -u origin main
 ```
 
@@ -162,7 +162,7 @@ SMTP_HOST="your-smtp-host"
 SMTP_PORT="587"
 SMTP_USER="your-smtp-user"
 SMTP_PASS="your-smtp-password"
-SMTP_FROM="Dareeba <no-reply@yourdomain.com>"
+SMTP_FROM="Fintyl <no-reply@yourdomain.com>"
 RATE_LIMIT_WINDOW_MS="60000"
 RATE_LIMIT_MAX="30"
 ```

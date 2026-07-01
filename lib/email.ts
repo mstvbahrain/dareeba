@@ -23,7 +23,7 @@ export async function notifyPartnerLead(payload: {
   await transporter.sendMail({
     from: process.env.SMTP_FROM,
     to: process.env.PARTNER_EMAIL,
-    subject: `New Dareeba VAT referral: ${payload.name}`,
+    subject: `New Fintyl VAT referral: ${payload.name}`,
     text: [
       `Name: ${payload.name}`,
       `Company: ${payload.companyName || "Not provided"}`,

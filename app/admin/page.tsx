@@ -16,7 +16,7 @@ export default async function AdminPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <p className="text-sm font-semibold uppercase tracking-wide text-gold">Admin</p>
-      <h1 className="mt-2 text-4xl font-bold tracking-tight text-navy">Dareeba dashboard</h1>
+      <h1 className="mt-2 text-4xl font-bold tracking-tight text-navy">Fintyl dashboard</h1>
 
       <div className="mt-8 grid gap-5 md:grid-cols-4">
         {[

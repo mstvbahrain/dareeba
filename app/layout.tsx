@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Dareeba | Bahrain VAT Estimate",
-  description: "AI-powered Bahrain VAT estimate and professional review referral."
+  title: "Fintyl | Bahrain VAT Estimate",
+  description: "AI-powered Bahrain VAT estimate and professional review referral.",
+  icons: {
+    icon: "/brand/fintyl-mark.png",
+    apple: "/brand/fintyl-mark.png"
+  }
 };
 
 const nav = [
@@ -22,8 +27,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
             <Link href="/" className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded bg-navy font-bold text-gold">D</span>
-              <span className="text-lg font-bold tracking-tight text-navy">Dareeba</span>
+              <Image
+                src="/brand/fintyl-mark.png"
+                alt="Fintyl"
+                width={40}
+                height={40}
+                className="h-10 w-10 rounded object-cover"
+                priority
+              />
+              <span className="text-lg font-bold tracking-tight text-navy">Fintyl</span>
             </Link>
             <nav className="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex">
               {nav.map(([label, href]) => (

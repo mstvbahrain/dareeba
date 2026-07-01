@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         price_data: {
           currency: plan.currency.toLowerCase(),
           unit_amount: plan.priceCents,
-          product_data: { name: `Dareeba ${plan.name}` },
+          product_data: { name: `Fintyl ${plan.name}` },
           recurring: plan.key === "monthly-business" ? { interval: "month" } : undefined
         }
       }

@@ -13,7 +13,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
   return new NextResponse(pdf, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="dareeba-${report.id}.pdf"`
+      "Content-Disposition": `attachment; filename="fintyl-${report.id}.pdf"`
     }
   });
 }

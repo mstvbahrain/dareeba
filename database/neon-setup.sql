@@ -1,4 +1,4 @@
--- Dareeba database setup for Neon SQL Editor.
+-- Fintyl database setup for Neon SQL Editor.
 -- Paste this whole file into Neon > SQL Editor, then click Run.
 
 DO $$ BEGIN
