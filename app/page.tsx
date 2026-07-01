@@ -13,9 +13,9 @@ export default function HomePage() {
             <Image
               src="/brand/fintyl-logo.png"
               alt="Fintyl - Finance. Simplified."
-              width={520}
-              height={390}
-              className="mb-8 h-auto w-64 rounded-md border border-white/10 shadow-soft sm:w-80"
+              width={724}
+              height={543}
+              className="mb-8 h-auto w-72 sm:w-[420px]"
               priority
             />
             <p className="text-sm font-semibold uppercase tracking-wide text-gold">Bahrain VAT estimate</p>
